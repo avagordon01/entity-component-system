@@ -23,6 +23,7 @@ template <typename... Components> class ecs {
             for (size_t e = 0; e < entity_signatures.size(); e++) {
                 if ((entity_signatures[e] & system_signatures[s]) == system_signatures[s]) {
                     //TODO call system
+                    std::get<Components...>(components);
                 }
                 for (size_t c = 0; c < component_indices.size(); c++) {
                     component_indices[c] += entity_signatures[e][c];

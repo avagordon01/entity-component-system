@@ -1,0 +1,11 @@
+could use some utilities for manipulating tuples
+    like check A is a subset of B
+    get the subset indices of A/B into a bitset
+    extract the tuple for a given bitset
+    take inspiration from the tuple_element possible implementation
+
+use functors for the systems
+how to even have multiple parameter packs
+use tuples for the components and systems
+want to take in a tuple of all components and a tuple of all systems
+maybe each system takes an input tuple, or use some fancy forward_as_tuple
