@@ -16,8 +16,6 @@ struct integrator {
 };
 
 int main() {
-    ecs::components_manager<position, velocity> ecs;
-    ecs.tick();
-    ecs::components_manager<>::systems_manager<integrator> s;
+    ecs::components_manager<position, velocity>::systems_manager<integrator> s;
     s.tick();
 }
