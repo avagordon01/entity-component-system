@@ -3,7 +3,13 @@
 #include <array>
 #include <tuple>
 
-template <typename... Components> class ecs {
+namespace ecs {
+template <typename... Components> struct components_manager {
+    template <typename... Systems> struct systems_manager {
+        void tick() {
+            (Systems()(), ...);
+        }
+    };
     //FIXME
     //static_assert(std::is_pod<Components...>(), "all component types must be POD");
 
@@ -23,7 +29,7 @@ template <typename... Components> class ecs {
             for (size_t e = 0; e < entity_signatures.size(); e++) {
                 if ((entity_signatures[e] & system_signatures[s]) == system_signatures[s]) {
                     //TODO call system
-                    std::get<Components...>(components);
+                    //std::get<Components...>(components);
                 }
                 for (size_t c = 0; c < component_indices.size(); c++) {
                     component_indices[c] += entity_signatures[e][c];
@@ -32,3 +38,4 @@ template <typename... Components> class ecs {
         }
     }
 };
+}

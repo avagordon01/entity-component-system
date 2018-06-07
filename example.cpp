@@ -9,13 +9,15 @@ struct vector {
 typedef vector position;
 typedef vector velocity;
 
-class integrator {
-    void operator()(position p, velocity v) {
-        p.x += v.x;
+struct integrator {
+    void operator()() {
+        printf("WORKING\n");
     }
 };
 
 int main() {
-    ecs<position, velocity> ecs;
-    printf("test\n");
+    ecs::components_manager<position, velocity> ecs;
+    ecs.tick();
+    ecs::components_manager<>::systems_manager<integrator> s;
+    s.tick();
 }
