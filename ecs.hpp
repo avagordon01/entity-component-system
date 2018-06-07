@@ -10,8 +10,7 @@ template <typename... Components> struct components_manager {
             (Systems()(), ...);
         }
     };
-    //FIXME
-    //static_assert(std::is_pod<Components...>(), "all component types must be POD");
+    static_assert((std::is_pod<Components>() && ...), "all component types must be POD");
 
     static constexpr size_t NumComponents = sizeof...(Components);
  
