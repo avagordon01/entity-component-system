@@ -1,4 +1,4 @@
-# Simple, Efficient C++17 Entity Component System
+# Entity Component System
 
 This repo provides a single header, performance-first entity component system written using C++17 template metaprogramming.
 
