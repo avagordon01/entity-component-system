@@ -1,5 +1,8 @@
 #include <tuple>
 #include <type_traits>
+#include <bitset>
+#include <cassert>
+#include <iostream>
 
 namespace mpl {
     template <typename T, typename... Ts>
@@ -27,7 +30,29 @@ namespace mpl {
     constexpr size_t index<T, std::tuple<U, Types...>> = 1 + index<T, std::tuple<Types...>>;
 
 
+    template <typename T, typename U>
+    constexpr std::bitset<1> ordered_subset_to_bitset = {std::is_same<T, U>{}};
+
+    template <typename... Ts, typename... Us>
+    constexpr std::bitset<sizeof...(Us)> ordered_subset_to_bitset<std::tuple<Ts...>, std::tuple<Us...>> =
+    {((1 << index<Ts, std::tuple<Us...>>) | ...)};
+
     void test() {
+        assert((
+            ordered_subset_to_bitset<
+                std::tuple<uint8_t, uint16_t>,
+                std::tuple<uint8_t, size_t, size_t, uint16_t, uint32_t>
+            >
+            ==
+            std::bitset<5>{(1 << 3) | (1 << 0)}
+        ));
+        assert((
+            ordered_subset_to_bitset<std::tuple<uint8_t, uint16_t>, std::tuple<uint8_t, uint32_t, uint16_t>>
+            ==
+            std::bitset<3>{(1 << 2) | (1 << 0)}
+        ));
+
+
         static_assert(contains<size_t, size_t>, "hmm");
         static_assert(!contains<size_t, uint8_t>, "hmm");
         static_assert(contains<size_t, size_t, size_t, size_t>, "hmm");
