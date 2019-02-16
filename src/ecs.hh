@@ -3,7 +3,7 @@
 #include <array>
 #include <tuple>
 
-#include "mpl.hpp"
+#include "mpl.hh"
 
 namespace ecs {
 template <typename... Components> struct components_manager {

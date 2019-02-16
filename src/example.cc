@@ -2,7 +2,7 @@
 #include <tuple>
 #include <bitset>
 
-#include "ecs.hpp"
+#include "ecs.hh"
 
 struct vector {
     float x, y, z;
