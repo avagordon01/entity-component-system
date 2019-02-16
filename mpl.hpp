@@ -33,9 +33,15 @@ namespace mpl {
     template <typename T, typename U>
     constexpr std::bitset<1> ordered_subset_to_bitset = {std::is_same<T, U>{}};
 
+    template <size_t N, size_t... Is>
+    constexpr std::bitset<N> bitset_indices_ones() {
+        return std::bitset<N>{((1 << Is) | ...)};
+    }
+
     template <typename... Ts, typename... Us>
     constexpr std::bitset<sizeof...(Us)> ordered_subset_to_bitset<std::tuple<Ts...>, std::tuple<Us...>> =
-    {((1 << index<Ts, std::tuple<Us...>>) | ...)};
+    bitset_indices_ones<sizeof...(Us), index<Ts, std::tuple<Us...>>...>();
+    //{((std::bitset<sizeof...(Us)>{}[index<Ts, std::tuple<Us...>>] = 1) | ...)};
 
     void test() {
         assert((
