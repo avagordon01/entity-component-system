@@ -1,0 +1,22 @@
+use a std::array of bools that can be compile time initialised rather than a bitset which is limited to 64bits compiletime initialisation
+
+first expose an external iteration entity_iterator<c_a, c_b, c_c>() interface
+
+add user facing functions for
+    runtime enabling/disabling types of components, individual components and entities
+    runtime adding/deleting/enabling/disabling types of components, individual components and entities
+
+allow user to specify when garbage collected
+adds and deletes are stored to a list, then applied when the user chooses
+(enable/disable should be really lightweight, toggling a bitset, to happen frequently)
+
+allow different component types to be stored using different data structures
+user chooses based on the number of components, sparseness, cost to allocate/initialise
+    >75% full
+        dense std::vector with some holes
+    25-75% full
+        dense std::vector with bitset tracking which entities have which components
+        most common, already partially implemented
+    <25% full
+        dense std::vector with a list of indices
+    basically take inspiration from sparse matrix storage
